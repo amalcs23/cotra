@@ -93,9 +93,10 @@ exports.InitLedger = async (org, user) => {
 
 exports.CreateCitizen = async (org, user,id, name, age, dose, certHash) => {
 	var contract = await gatewayFun(org, user);
+	var result;
 	try{
 		console.log('\n--> Submit Transaction: CreateCitizen, creates new asset with ID, Name, Age, Dose, and CertHash arguments');
-		let result = await contract.submitTransaction('CreateCitizen', id, name, age, dose, certHash);
+		result = await contract.submitTransaction('CreateCitizen', id, name, age, dose, certHash);
 		console.log('*** Result: committed');
 		if (`${result}` !== '') {
 			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
@@ -103,18 +104,20 @@ exports.CreateCitizen = async (org, user,id, name, age, dose, certHash) => {
 	}catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
+	return result;
 }
 
 exports.ReadCitizen = async (org, user,id) => {
 	var contract = await gatewayFun(org, user);
+	var result;
 	try{
-		console.log("Here",id);
 		console.log('\n--> Evaluate Transaction: ReadCitizen, function returns an citizen with a given ID');
-		result = await contract.evaluateTransaction('ReadCitizen', '1000');
+		result = await contract.evaluateTransaction('ReadCitizen', id);
 		console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 	}catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
+	return prettyJSONString(result.toString());
 }
 
 exports.UpdateCitizen = async (org, user, id, name, age, dose, certHash) => {
@@ -133,9 +136,10 @@ exports.UpdateCitizen = async (org, user, id, name, age, dose, certHash) => {
 
 exports.UpdateDose = async (org, user, id, dose) => {
 	var contract = await gatewayFun(org, user);
+	var result;
 	try{
 		console.log('\n--> Submit Transaction: UpdateDos update dose data for given  ID');
-		let result = await contract.submitTransaction('UpdateDose', id, dose);
+		result = await contract.submitTransaction('UpdateDose', id, dose);
 		console.log('*** Result: committed');
 		if (`${result}` !== '') {
 			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
@@ -143,6 +147,7 @@ exports.UpdateDose = async (org, user, id, dose) => {
 	}catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
+	return result;
 }
 
 

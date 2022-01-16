@@ -16,7 +16,6 @@ app.post("/enrolladmin", function(req, res) {
 });
 
 app.post("/enrolluser", function(req, res) {
-  console.log(req.body.org);
   var org = Number(req.body.org);
   var user = req.body.user;
   result =  fabric.enrollUser(org,user);
@@ -24,15 +23,13 @@ app.post("/enrolluser", function(req, res) {
 });
 
 app.post("/init", function(req, res) {
-  console.log(req.body.org);
   var org = Number(req.body.org);
   var user = req.body.user;
   result =  fabric.InitLedger(org,user);
   res.send(result);
 });
 
-app.post("/createcitizen", function(req, res) {
-  console.log(req.body.org);
+app.post("/createcitizen", async function(req, res) {
   var org = Number(req.body.org);
   var user = req.body.user;
   var id = req.body.id;
@@ -40,25 +37,24 @@ app.post("/createcitizen", function(req, res) {
   var age = req.body.age;
   var dose = req.body.dose;
   var certHash = req.body.certHash;
-  result =  fabric.CreateCitizen(org,user, id, name, age, dose, certHash);
+  result =  await fabric.CreateCitizen(org,user, id, name, age, dose, certHash);
   res.send(result);
 });
 
-app.post("/readcitizen", function(req, res) {
+app.post("/readcitizen", async function(req, res) {
   var org = Number(req.body.org);
   var user = req.body.user;
   var id = req.body.id;
-  result =  fabric.ReadCitizen(org,user,id);
+  result =  await fabric.ReadCitizen(org,user,id);
   res.send(result);
 });
 
-app.post("/updatedose", function(req, res) {
-  console.log(req.body.org);
+app.post("/updatedose", async function(req, res) {
   var org = Number(req.body.org);
   var user = req.body.user;
   var id = req.body.id;
   var dose = req.body.dose;
-  result =  fabric.UpdateDose(org,user, id, dose);
+  result =  await fabric.UpdateDose(org,user, id, dose);
   res.send(result);
 });
 
